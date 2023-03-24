@@ -1,0 +1,9 @@
+.idea
+logs
+node_modules/
+jspm_packages/
+typings/
+cypress/videos
+cypress/screenshots
+cypress/cucumber-json
+reports/cucumber-htmlreport.html/features

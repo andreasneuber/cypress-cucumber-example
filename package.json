@@ -1,0 +1,42 @@
+{
+  "name": "cypress-cucumber-framework",
+  "version": "1.0.0",
+  "description": "Sample implementation of Cypress using Cucumber",
+  "main": "index.js",
+  "scripts": {
+    "test:all": "cypress run --spec \"**/ProvideYourDetails.feature\"",
+    "test": "cypress run --spec \"**/*.feature\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andreasneuber/cypress-cucumber-framework.git"
+  },
+  "keywords": [
+    "cypress",
+    "cucumber",
+    "testing"
+  ],
+  "author": "Andreas Neuber",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/andreasneuber/cypress-cucumber-framework/issues"
+  },
+  "homepage": "https://github.com/andreasneuber/cypress-cucumber-framework#readme",
+  "dependencies": {
+    "cypress": "^12.5.0",
+    "cypress-cucumber-preprocessor": "^4.3.0"
+  },
+  "cypress-cucumber-preprocessor": {
+    "nonGlobalStepDefinitions": false,
+    "stepDefinitions": "cypress/e2e/step_definitions/",
+    "cucumberJson": {
+      "generate": true,
+      "outputFolder": "cypress/cucumber-json",
+      "filePrefix": "",
+      "fileSuffix": ".cucumber"
+    }
+  },
+  "devDependencies": {
+    "multiple-cucumber-html-reporter": "^3.1.0"
+  }
+}

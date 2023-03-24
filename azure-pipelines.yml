@@ -1,0 +1,32 @@
+trigger:
+  - none
+
+pool:
+  vmImage: 'ubuntu-22.04'
+
+steps:
+
+  - script: |
+      sudo apt-get update
+      sudo apt-get install -y zip wget ca-certificates 
+      sudo apt-get install -y libnss3-dev libasound2 libxss1 libappindicator3-1 gconf-service 
+      sudo apt-get install -y libgconf-2-4 libpango1.0-0 xdg-utils fonts-liberation libgbm1 libu2f-udev
+      sudo apt-get -y install libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 libxtst6 xauth xvfb
+      
+      sudo wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+      sudo dpkg -i google-chrome*.deb
+      sudo rm google-chrome*.deb
+      
+      npm ci
+      npm test
+      node cucumber-html-report.js
+    displayName: 'E2E Testing'
+    continueOnError: true
+
+  - publish: $(System.DefaultWorkingDirectory)/reports/cucumber-htmlreport.html/
+    artifact: Cucumber-Report
+    displayName: 'Artifacts Cucumber Report'
+
+  - publish: $(System.DefaultWorkingDirectory)/cypress/videos/
+    artifact: Cypress Videos
+    displayName: 'Artifacts Videos'
