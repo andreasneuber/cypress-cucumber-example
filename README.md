@@ -15,7 +15,7 @@ npm test
 - In package.json, change line 8 to `"test": "cypress run --browser chrome --headless --spec \"**/*.feature\""`
 
 ## Reports
-Steps to create Cucumber HTML report
+Steps to create a Multiple Cucumber HTML report:
 - Run tests with `npm test`
 - json files in dir `cypress/cucumber-json` will be updated
 - Then run `node cucumber-html-report.js`
