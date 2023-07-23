@@ -23,8 +23,8 @@
   },
   "homepage": "https://github.com/andreasneuber/cypress-cucumber-framework#readme",
   "dependencies": {
-    "cypress": "^12.5.0",
-    "cypress-cucumber-preprocessor": "^4.3.0"
+    "cypress": "^12.17.2",
+    "cypress-cucumber-preprocessor": "^4.3.1"
   },
   "cypress-cucumber-preprocessor": {
     "nonGlobalStepDefinitions": false,
@@ -37,6 +37,6 @@
     }
   },
   "devDependencies": {
-    "multiple-cucumber-html-reporter": "^3.1.0"
+    "multiple-cucumber-html-reporter": "^3.4.0"
   }
 }
