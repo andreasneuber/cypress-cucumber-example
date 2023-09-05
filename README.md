@@ -8,7 +8,7 @@ Readme in this repo has further details how to set it up.
 
 ```
 npm install
-npm test
+npm test:all
 ```
 
 ## Run tests in CI
@@ -16,7 +16,7 @@ npm test
 
 ## Reports
 Steps to create a Multiple Cucumber HTML report:
-- Run tests with `npm test`
+- Run tests with `npm test:all`
 - json files in dir `cypress/cucumber-json` will be updated
 - Then run `node cucumber-html-report.js`
 - Open file `reports/cucumber-htmlreport.html/index.html` in browser

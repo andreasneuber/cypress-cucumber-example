@@ -4,8 +4,8 @@
   "description": "Sample implementation of Cypress using Cucumber",
   "main": "index.js",
   "scripts": {
-    "test:all": "cypress run --spec \"**/ProvideYourDetails.feature\"",
-    "test": "cypress run --spec \"**/*.feature\""
+    "test:specific": "cypress run --spec \"**/ProvideYourDetails.feature\"",
+    "test:all": "cypress run --spec \"**/*.feature\""
   },
   "repository": {
     "type": "git",
@@ -23,7 +23,7 @@
   },
   "homepage": "https://github.com/andreasneuber/cypress-cucumber-framework#readme",
   "dependencies": {
-    "cypress": "^12.17.2",
+    "cypress": "^13.1.0",
     "cypress-cucumber-preprocessor": "^4.3.1"
   },
   "cypress-cucumber-preprocessor": {
