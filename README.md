@@ -8,7 +8,7 @@ Readme in this repo has further details how to set it up.
 
 ```
 npm install
-npm test:all
+npm run test:all
 ```
 
 ## Run tests in CI
