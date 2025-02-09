@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test:specific": "cypress run --spec \"**/ProvideYourDetails.feature\"",
-    "test:all": "cypress run --spec \"**/*.feature\""
+    "test:all": "cypress run --spec \"**/*.feature\"",
+    "test:all:chrome": "cypress run --spec \"**/*.feature\" --browser chrome"
   },
   "repository": {
     "type": "git",
