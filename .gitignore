@@ -7,3 +7,4 @@ cypress/videos
 cypress/screenshots
 cypress/cucumber-json
 reports/cucumber-htmlreport.html/features
+reports/cucumber-htmlreport.html/index.html
