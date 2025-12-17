@@ -1,27 +1,67 @@
-FROM node:20.9
+# Stage 1: Dependencies
+FROM node:20.11-slim AS dependencies
 
-# Set the work directory for the application
+# Set the work directory
+WORKDIR /app
+
+# Copy package files for dependency installation
+COPY package.json package-lock.json* ./
+
+# Install dependencies
+RUN npm ci --only=production && npm cache clean --force
+
+# Stage 2: Build with dev dependencies
+FROM node:20.11-slim AS builder
+
+WORKDIR /app
+
+# Copy package files
+COPY package.json package-lock.json* ./
+
+# Install all dependencies (including dev)
+RUN npm ci && npm cache clean --force
+
+# Copy source files
+COPY cypress.config.js ./
+COPY cucumber-html-report.js ./
+COPY cypress/ ./cypress/
+
+# Stage 3: Runtime
+FROM node:20.11-slim
+
+# Install Cypress system dependencies and Chrome
+RUN apt-get update && \
+    apt-get install -y \
+    zip wget ca-certificates \
+    libnss3-dev libasound2 libxss1 libappindicator3-1 \
+    libgconf-2-4 libpango1.0-0 xdg-utils fonts-liberation libgbm1 libu2f-udev libvulkan1 \
+    libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libnss3 libxtst6 xauth xvfb && \
+    wget -q https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb && \
+    dpkg -i google-chrome*.deb && \
+    rm google-chrome*.deb && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
+# Set the work directory
 WORKDIR /app
 
 # Set the environment path to node_modules/.bin
-ENV PATH /app/node_modules/.bin:$PATH
+ENV PATH=/app/node_modules/.bin:$PATH \
+    CYPRESS_CACHE_FOLDER=/root/.cache/Cypress
 
-# COPY the needed files to the app folder in Docker image
-COPY cypress/ /app/cypress/
-COPY reports/ /app/reports/
-COPY cucumber-html-report.js /app/cucumber-html-report.js
-COPY cypress.config.js /app/cypress.config.js
-COPY package.json /app/
+# Copy dependencies from dependencies stage
+COPY --from=dependencies /app/node_modules ./node_modules
 
-# Get the needed libraries to run Cypress
-RUN apt-get update
-RUN apt-get install -y zip wget ca-certificates
-RUN apt-get install -y libnss3-dev libasound2 libxss1 libappindicator3-1 gconf-service
-RUN apt-get install -y libgconf-2-4 libpango1.0-0 xdg-utils fonts-liberation libgbm1 libu2f-udev libvulkan1
-RUN apt-get install -y libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 libxtst6 xauth xvfb
-RUN wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-RUN dpkg -i google-chrome*.deb
-RUN rm google-chrome*.deb
+# Copy application files from builder
+COPY --from=builder /app/cypress.config.js ./
+COPY --from=builder /app/cucumber-html-report.js ./
+COPY --from=builder /app/cypress ./cypress
 
-# Install the dependencies in Node environment
-RUN npm install
+# Copy package.json for metadata
+COPY package.json ./
+
+# Create reports directory
+RUN mkdir -p /app/reports
+
+# Set default command
+CMD ["npm", "run", "test"]
