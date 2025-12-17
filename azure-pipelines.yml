@@ -4,29 +4,100 @@ trigger:
 pool:
   vmImage: 'ubuntu-22.04'
 
-steps:
+variables:
+  npm_config_cache: $(Pipeline.Workspace)/.npm
 
-  - script: |
-      sudo apt-get update
-      sudo apt-get install -y zip wget ca-certificates 
-      sudo apt-get install -y libnss3-dev libasound2 libxss1 libappindicator3-1 gconf-service 
-      sudo apt-get install -y libgconf-2-4 libpango1.0-0 xdg-utils fonts-liberation libgbm1 libu2f-udev
-      sudo apt-get -y install libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 libxtst6 xauth xvfb
-      
-      sudo wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-      sudo dpkg -i google-chrome*.deb
-      sudo rm google-chrome*.deb
-      
-      npm ci
-      npm test
-      node cucumber-html-report.js
+stages:
+  - stage: SecurityAudit
+    displayName: 'Security Audit'
+    jobs:
+      - job: NpmAudit
+        displayName: 'Run npm audit'
+        steps:
+          - task: NodeTool@0
+            inputs:
+              versionSpec: '20.x'
+            displayName: 'Install Node.js'
+
+          - task: Cache@2
+            inputs:
+              key: 'npm | "$(Agent.OS)" | package-lock.json'
+              restoreKeys: |
+                npm | "$(Agent.OS)"
+              path: $(npm_config_cache)
+            displayName: 'Cache npm'
+
+          - script: npm ci
+            displayName: 'Install dependencies'
+
+          - script: npm audit --audit-level=moderate
+            displayName: 'Run security audit'
+            continueOnError: true
+
+  - stage: Test
     displayName: 'E2E Testing'
-    continueOnError: true
+    dependsOn: SecurityAudit
+    condition: succeeded()
+    jobs:
+      - job: CypressTests
+        displayName: 'Run Cypress Tests'
+        steps:
+          - task: NodeTool@0
+            inputs:
+              versionSpec: '20.x'
+            displayName: 'Install Node.js'
 
-  - publish: $(System.DefaultWorkingDirectory)/reports/cucumber-htmlreport.html/
-    artifact: Cucumber-Report
-    displayName: 'Artifacts Cucumber Report'
+          - task: Cache@2
+            inputs:
+              key: 'npm | "$(Agent.OS)" | package-lock.json'
+              restoreKeys: |
+                npm | "$(Agent.OS)"
+              path: $(npm_config_cache)
+            displayName: 'Cache npm'
 
-  - publish: $(System.DefaultWorkingDirectory)/cypress/videos/
-    artifact: Cypress Videos
-    displayName: 'Artifacts Videos'
+          - task: Cache@2
+            inputs:
+              key: 'cypress | "$(Agent.OS)" | package-lock.json'
+              restoreKeys: |
+                cypress | "$(Agent.OS)"
+              path: $(Pipeline.Workspace)/.cache/Cypress
+            displayName: 'Cache Cypress binary'
+
+          - script: |
+              sudo apt-get update
+              sudo apt-get install -y zip wget ca-certificates 
+              sudo apt-get install -y libnss3-dev libasound2 libxss1 libappindicator3-1 gconf-service 
+              sudo apt-get install -y libgconf-2-4 libpango1.0-0 xdg-utils fonts-liberation libgbm1 libu2f-udev
+              sudo apt-get -y install libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 libxtst6 xauth xvfb
+              
+              sudo wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+              sudo dpkg -i google-chrome*.deb
+              sudo rm google-chrome*.deb
+            displayName: 'Install system dependencies'
+
+          - script: npm ci
+            displayName: 'Install npm dependencies'
+
+          - script: npm run test
+            displayName: 'Run Cypress tests'
+            env:
+              CYPRESS_BASE_URL: 'http://localhost:8000/'
+
+          - script: npm run report
+            displayName: 'Generate HTML report'
+            condition: always()
+
+          - publish: $(System.DefaultWorkingDirectory)/reports/cucumber-htmlreport.html/
+            artifact: Cucumber-Report
+            displayName: 'Publish Cucumber Report'
+            condition: always()
+
+          - publish: $(System.DefaultWorkingDirectory)/cypress/videos/
+            artifact: Cypress-Videos
+            displayName: 'Publish Cypress Videos'
+            condition: always()
+
+          - publish: $(System.DefaultWorkingDirectory)/cypress/screenshots/
+            artifact: Cypress-Screenshots
+            displayName: 'Publish Cypress Screenshots'
+            condition: failed()
