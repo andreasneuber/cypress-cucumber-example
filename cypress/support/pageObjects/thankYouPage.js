@@ -1,16 +1,19 @@
-//const basePage = require("cypress/support/pageObjects/")
-
-class thankYouPage {
-
-    static url = "?action=thankYou";
-
-    static visit() {
-        cy.visit(this.url);
+class ThankYouPage {
+    constructor() {
+        this.url = "?action=thankYou";
+        this.selectors = {
+            messageHeading: 'h2'
+        };
     }
 
-    static grabThankYouMessage() {
-        return cy.get('h2');
+    visit() {
+        cy.visit(this.url);
+        return this;
+    }
+
+    grabThankYouMessage() {
+        return cy.get(this.selectors.messageHeading);
     }
 }
 
-export default thankYouPage
+export default new ThankYouPage();

@@ -1,36 +1,46 @@
-//const basePage = require("cypress/support/pageObjects/")
+class EmployeePage {
+    constructor() {
+        this.url = "?action=employee";
+        this.selectors = {
+            pageHeading: 'h2',
+            employeeNameInput: '#employee-name',
+            searchButton: '#btnSearch',
+            employeeDetails: '#employee-details',
+            employeeName: '.employee.name',
+            employeeDepartment: '.employee.department'
+        };
+    }
 
-class employeePage {
-
-    static url = "?action=employee";
-
-    static visit() {
+    visit() {
         cy.visit(this.url);
+        return this;
     }
 
-    static employeePageIsDisplayed() {
-        return cy.get('h2').contains('Human Resources - Find employee');
+    employeePageIsDisplayed() {
+        return cy.get(this.selectors.pageHeading).contains('Human Resources - Find employee');
     }
 
-    static fillEmployeeNameInput(employeeName) {
-        cy.get('#employee-name').clear().type(employeeName);
+    fillEmployeeNameInput(employeeName) {
+        cy.get(this.selectors.employeeNameInput).clear().type(employeeName);
+        return this;
     }
 
-    static clickSearchBtn() {
-        cy.get('#btnSearch').click();
+    clickSearchBtn() {
+        cy.get(this.selectors.searchButton).click();
+        return this;
     }
 
-    static employeeRecordIsDisplayed() {
-        return cy.get('#employee-details');
+    employeeRecordIsDisplayed() {
+        return cy.get(this.selectors.employeeDetails);
     }
 
-    static grabEmployeeName() {
-        return cy.get('.employee.name').invoke('text');
+    grabEmployeeName() {
+        return cy.get(this.selectors.employeeName).invoke('text');
     }
 
-    static grabDepartmentName() {
-        return cy.get('.employee.department').invoke('text');
+    grabDepartmentName() {
+        return cy.get(this.selectors.employeeDepartment).invoke('text');
     }
 }
 
-export default employeePage
+export default new EmployeePage();

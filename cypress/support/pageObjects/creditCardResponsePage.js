@@ -1,24 +1,29 @@
-//const basePage = require("cypress/support/pageObjects/")
+class CreditCardResponsePage {
+    constructor() {
+        this.url = "?action=responsecc";
+        this.selectors = {
+            alertBox: '.alert',
+            response: '.response',
+            moreInfo: '.more-info'
+        };
+    }
 
-class creditCardResponsePage {
-
-    static url = "?action=responsecc";
-
-    static visit() {
+    visit() {
         cy.visit(this.url);
+        return this;
     }
 
-    static getAlertMessageBox() {
-        return cy.get('.alert');
+    getAlertMessageBox() {
+        return cy.get(this.selectors.alertBox);
     }
 
-    static grabResponseFromAlertBox() {
-        return cy.get('.response').invoke('text');
+    grabResponseFromAlertBox() {
+        return cy.get(this.selectors.response).invoke('text');
     }
 
-    static grabMoreInfoFromAlertBox() {
-        return cy.get('.more-info').invoke('text');
+    grabMoreInfoFromAlertBox() {
+        return cy.get(this.selectors.moreInfo).invoke('text');
     }
 }
 
-export default creditCardResponsePage
+export default new CreditCardResponsePage();

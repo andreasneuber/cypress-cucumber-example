@@ -1,35 +1,36 @@
-//const basePage = require("cypress/support/pageObjects/")
+class UserAccountPage {
+    constructor() {
+        this.url = "?action=useraccount";
+        this.selectors = {
+            userAccountHeading: 'h2',
+            adminDashboardHeading: 'h2',
+            hrResourcesLink: '#hr-resources-link',
+            salesLink: '#sales-statistics-link'
+        };
+    }
 
-class userAccountPage {
-
-    static url = "?action=useraccount";
-
-    static visit() {
+    visit() {
         cy.visit(this.url);
+        return this;
     }
 
-    static displayTitleForm() {
-        let visible = false;
-        cy.get('h2').contains('User Account').then(title => {
-            if (title.is(':visible')){
-                visible = true;
-            }
-        })
-        return visible;
+    displayTitleForm() {
+        return cy.get(this.selectors.userAccountHeading).contains('User Account').should('be.visible');
     }
 
-    static displayAdminDashboard() {
-        return cy.get('h2').contains('Admin Dashboard');
+    displayAdminDashboard() {
+        return cy.get(this.selectors.adminDashboardHeading).contains('Admin Dashboard');
     }
 
-    static navigateToHumanResourcesSection() {
-        cy.get('#hr-resources-link').click();
+    navigateToHumanResourcesSection() {
+        cy.get(this.selectors.hrResourcesLink).click();
+        return this;
     }
 
-    static navigateToSalesSection() {
-        cy.get('#sales-statistics-link').click();
-        //cy.wait(3000);
+    navigateToSalesSection() {
+        cy.get(this.selectors.salesLink).click();
+        return this;
     }
 }
 
-export default userAccountPage
+export default new UserAccountPage();

@@ -1,33 +1,43 @@
-//const basePage = require("cypress/support/pageObjects/")
+class LoginPage {
+    constructor() {
+        this.url = "?action=form4";
+        this.selectors = {
+            usernameInput: 'input[name="user"]',
+            passwordInput: 'input[name="pw"]',
+            loginButton: '#btnLogin',
+            titleHeading: 'h2'
+        };
+    }
 
-class loginPage {
-
-    static url = "?action=form4";
-
-    static visit() {
+    visit() {
         cy.visit(this.url);
+        return this;
     }
 
-    static provideUsername(username) {
-        cy.get('input[name="user"]').clear().type(username);
+    provideUsername(username) {
+        cy.get(this.selectors.usernameInput).clear().type(username);
+        return this;
     }
 
-    static providePassword(password) {
-        cy.get('input[name="pw"]').clear().type(password);
+    providePassword(password) {
+        cy.get(this.selectors.passwordInput).clear().type(password);
+        return this;
     }
 
-    static login(username, password) {
+    login(username, password) {
         this.provideUsername(username);
         this.providePassword(password);
+        return this;
     }
 
-    static clickLogin() {
-        cy.get('#btnLogin').click();
+    clickLogin() {
+        cy.get(this.selectors.loginButton).click();
+        return this;
     }
 
-    static getTitleForm() {
-        cy.get('h2').should('have.text', 'User 123')
+    getTitleForm() {
+        return cy.get(this.selectors.titleHeading).should('have.text', 'User 123');
     }
 }
 
-export default loginPage
+export default new LoginPage();

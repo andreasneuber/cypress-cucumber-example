@@ -1,28 +1,33 @@
-//const basePage = require("cypress/support/pageObjects/")
+class SalesPage {
+    constructor() {
+        this.url = "?action=sales";
+        this.selectors = {
+            pageHeading: 'h2',
+            yearMonthHeader: '.sales.header-year-month',
+            tableCell: 'td'
+        };
+    }
 
-class salesPage {
-
-    static url = "?action=sales";
-
-    static visit() {
+    visit() {
         cy.visit(this.url);
+        return this;
     }
 
-    static salesStatisticsPageIsDisplayed() {
-        return cy.get('h2').contains('Sales - Statistics');
+    salesStatisticsPageIsDisplayed() {
+        return cy.get(this.selectors.pageHeading).contains('Sales - Statistics');
     }
 
-    static grabYearMonthHeader() {
-        return cy.get('.sales.header-year-month');
+    grabYearMonthHeader() {
+        return cy.get(this.selectors.yearMonthHeader);
     }
 
-    static monthCellIsDisplayed(month) {
-        return cy.get('td').contains(month);
+    monthCellIsDisplayed(month) {
+        return cy.get(this.selectors.tableCell).contains(month);
     }
 
-    static grabSalesAmountFromMonth(month) {
-        return cy.get('td').contains(month).next().invoke('text');
+    grabSalesAmountFromMonth(month) {
+        return cy.get(this.selectors.tableCell).contains(month).next().invoke('text');
     }
 }
 
-export default salesPage
+export default new SalesPage();

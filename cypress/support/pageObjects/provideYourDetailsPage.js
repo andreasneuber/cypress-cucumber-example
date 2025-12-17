@@ -1,59 +1,80 @@
-//const basePage = require("cypress/support/pageObjects/")
+class ProvideYourDetailsPage {
+    constructor() {
+        this.url = "?action=form1";
+        this.selectors = {
+            firstNameInput: '#fname',
+            lastNameInput: '#lname',
+            streetInput: '#street',
+            cityInput: '#city',
+            zipInput: '#zip',
+            stateInput: '#state',
+            countryInput: '#country',
+            mobileInput: '#mobile',
+            homeInput: '#home',
+            emailInput: '#email',
+            submitButton: '#submit-info'
+        };
+    }
 
-class provideYourDetailsPage {
-
-    static url = "?action=form1";
-
-    static visit() {
+    visit() {
         cy.visit(this.url);
+        return this;
     }
 
-    // @FindBy(how = How.XPATH, using = "//h2[contains(text(),'Form 1 - Information about yourself')]")
-    // public WebElement titleForm;
-
-    static provideFirstname(firstName) {
-        cy.get('#fname').clear().type(firstName);
+    provideFirstname(firstName) {
+        cy.get(this.selectors.firstNameInput).clear().type(firstName);
+        return this;
     }
 
-    static provideLastName(lastName) {
-        cy.get('#lname').clear().type(lastName);
+    provideLastName(lastName) {
+        cy.get(this.selectors.lastNameInput).clear().type(lastName);
+        return this;
     }
 
-    static provideStreet(street) {
-        cy.get('#street').clear().type(street);
+    provideStreet(street) {
+        cy.get(this.selectors.streetInput).clear().type(street);
+        return this;
     }
 
-    static provideCity(city) {
-        cy.get('#city').clear().type(city);
+    provideCity(city) {
+        cy.get(this.selectors.cityInput).clear().type(city);
+        return this;
     }
 
-    static provideZip(zipCode) {
-        cy.get('#zip').clear().type(zipCode);
+    provideZip(zipCode) {
+        cy.get(this.selectors.zipInput).clear().type(zipCode);
+        return this;
     }
 
-    static provideState(state) {
-        cy.get('#state').clear().type(state);
+    provideState(state) {
+        cy.get(this.selectors.stateInput).clear().type(state);
+        return this;
     }
 
-    static provideCountry(country) {
-        cy.get('#country').clear().type(country);
+    provideCountry(country) {
+        cy.get(this.selectors.countryInput).clear().type(country);
+        return this;
     }
 
-    static provideMobilePhoneNumber(number) {
-        cy.get('#mobile').clear().type(number);
+    provideMobilePhoneNumber(number) {
+        cy.get(this.selectors.mobileInput).clear().type(number);
+        return this;
     }
 
-    static provideHomePhoneNumber(number) {
-        cy.get('#home').clear().type(number);
+    provideHomePhoneNumber(number) {
+        cy.get(this.selectors.homeInput).clear().type(number);
+        return this;
     }
 
-    static provideEmail(email) {
-        cy.get('#email').clear().type(email);
+    provideEmail(email) {
+        cy.get(this.selectors.emailInput).clear().type(email);
+        return this;
     }
 
-    static clickSubmitYourInformation() {
-        cy.get('#submit-info').click();
+    clickSubmitYourInformation() {
+        cy.get(this.selectors.submitButton).click();
+        return this;
     }
 }
 
-export default provideYourDetailsPage
+export default new ProvideYourDetailsPage();

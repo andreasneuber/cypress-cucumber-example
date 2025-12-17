@@ -1,24 +1,31 @@
-//const basePage = require("cypress/support/pageObjects/")
+class CelsiusToFahrenheitPage {
+    constructor() {
+        this.url = "?action=form6";
+        this.selectors = {
+            celsiusInput: 'input[name="celsius"]',
+            fahrenheitInput: 'input[name="fahrenheit"]',
+            convertButton: '#btnCelsius'
+        };
+    }
 
-class celsiusToFahrenheitPage {
-
-    static url = "?action=form6";
-
-    static visit() {
+    visit() {
         cy.visit(this.url);
+        return this;
     }
 
-    static provideCelsius(celsiusDegrees) {
-        cy.get('input[name="celsius"]').clear().type(celsiusDegrees);
+    provideCelsius(celsiusDegrees) {
+        cy.get(this.selectors.celsiusInput).clear().type(celsiusDegrees);
+        return this;
     }
 
-    static clickConvert() {
-        cy.get('#btnCelsius').click();
+    clickConvert() {
+        cy.get(this.selectors.convertButton).click();
+        return this;
     }
 
-    static readFahrenheitField() {
-        return cy.get('input[name="fahrenheit"]').invoke('attr', 'value');
+    readFahrenheitField() {
+        return cy.get(this.selectors.fahrenheitInput).invoke('attr', 'value');
     }
 }
 
-export default celsiusToFahrenheitPage
+export default new CelsiusToFahrenheitPage();

@@ -1,27 +1,37 @@
-//const basePage = require("cypress/support/pageObjects/")
+class CreditCardEntryPage {
+    constructor() {
+        this.url = "?action=form3";
+        this.selectors = {
+            cardNameInput: '#cname',
+            cardNumberInput: '#ccnum',
+            expiryDateInput: '#expdate',
+            cvvInput: '#cvv',
+            payNowButton: '#btnPaynow',
+            entryForm: '#ccentry'
+        };
+    }
 
-class creditCardEntryPage {
-
-    static url = "?action=form3";
-
-    static visit() {
+    visit() {
         cy.visit(this.url);
+        return this;
     }
 
-    static enterCardInformation(cardname, ccnumber, expiryDate, cvv) {
-        cy.get('#cname').clear().type(cardname);
-        cy.get('#ccnum').clear().type(ccnumber);
-        cy.get('#expdate').clear().type(expiryDate);
-        cy.get('#cvv').clear().type(cvv);
+    enterCardInformation(cardname, ccnumber, expiryDate, cvv) {
+        cy.get(this.selectors.cardNameInput).clear().type(cardname);
+        cy.get(this.selectors.cardNumberInput).clear().type(ccnumber);
+        cy.get(this.selectors.expiryDateInput).clear().type(expiryDate);
+        cy.get(this.selectors.cvvInput).clear().type(cvv);
+        return this;
     }
 
-    static submitPayment() {
-        cy.get('#btnPaynow').click();
+    submitPayment() {
+        cy.get(this.selectors.payNowButton).click();
+        return this;
     }
 
-    static getCreditCardInfoEntryForm() {
-        return cy.get('#ccentry');
+    getCreditCardInfoEntryForm() {
+        return cy.get(this.selectors.entryForm);
     }
 }
 
-export default creditCardEntryPage
+export default new CreditCardEntryPage();
