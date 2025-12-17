@@ -1,4 +1,4 @@
-import {Given, When, Then, Before} from "cypress-cucumber-preprocessor/steps";
+import {Given, When, Then, Before} from "@badeball/cypress-cucumber-preprocessor";
 import creditCardEntryPage from "../../support/pageObjects/creditCardEntryPage.js";
 import creditCardResponsePage from "../../support/pageObjects/creditCardResponsePage.js";
 

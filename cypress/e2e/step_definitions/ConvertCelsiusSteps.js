@@ -1,4 +1,4 @@
-import {Given, When, Then, Before} from "cypress-cucumber-preprocessor/steps";
+import {Given, When, Then, Before} from "@badeball/cypress-cucumber-preprocessor";
 import celsiusToFahrenheitPage from "../../support/pageObjects/celsiusToFahrenheitPage.js";
 
 Given(/^I provide "([^"]*)" degree Celsius$/, celsius => {

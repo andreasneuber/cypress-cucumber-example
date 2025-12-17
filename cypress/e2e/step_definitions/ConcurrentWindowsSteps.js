@@ -1,4 +1,4 @@
-import {Given, When, Then, Before} from "cypress-cucumber-preprocessor/steps";
+import {Given, When, Then, Before} from "@badeball/cypress-cucumber-preprocessor";
 
 Given(/^different people went to different sites$/, function () {
 
