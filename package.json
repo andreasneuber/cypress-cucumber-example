@@ -2,11 +2,18 @@
   "name": "cypress-cucumber-example",
   "version": "1.0.0",
   "description": "Sample implementation of Cypress using Cucumber",
-  "main": "index.js",
   "scripts": {
-    "test:specific": "cypress run --spec \"**/ProvideYourDetails.feature\"",
+    "test": "cypress run --spec \"**/*.feature\"",
     "test:all": "cypress run --spec \"**/*.feature\"",
-    "test:all:chrome": "cypress run --spec \"**/*.feature\" --browser chrome"
+    "test:specific": "cypress run --spec \"**/ProvideYourDetails.feature\"",
+    "test:chrome": "cypress run --spec \"**/*.feature\" --browser chrome",
+    "test:headed": "cypress run --spec \"**/*.feature\" --headed",
+    "cypress:open": "cypress open",
+    "cypress:run": "cypress run",
+    "report": "node cucumber-html-report.js"
+  },
+  "engines": {
+    "node": ">=20.0.0"
   },
   "repository": {
     "type": "git",
@@ -23,21 +30,18 @@
     "url": "https://github.com/andreasneuber/cypress-cucumber-example/issues"
   },
   "homepage": "https://github.com/andreasneuber/cypress-cucumber-example#readme",
-  "dependencies": {
+  "devDependencies": {
+    "@badeball/cypress-cucumber-preprocessor": "24.0.0",
+    "@bahmutov/cypress-esbuild-preprocessor": "^2.2.3",
     "cypress": "^15.0.0",
-    "cypress-cucumber-preprocessor": "^4.3.1"
+    "multiple-cucumber-html-reporter": "^3.9.3"
   },
   "cypress-cucumber-preprocessor": {
-    "nonGlobalStepDefinitions": false,
-    "stepDefinitions": "cypress/e2e/step_definitions/",
-    "cucumberJson": {
-      "generate": true,
-      "outputFolder": "cypress/cucumber-json",
-      "filePrefix": "",
-      "fileSuffix": ".cucumber"
+    "stepDefinitions": "cypress/e2e/step_definitions/**/*.{js,ts}",
+    "json": {
+      "enabled": true,
+      "output": "cypress/cucumber-json/{name}.cucumber.json",
+      "formatter": "cucumber-json"
     }
-  },
-  "devDependencies": {
-    "multiple-cucumber-html-reporter": "^3.9.3"
   }
 }

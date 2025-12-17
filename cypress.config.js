@@ -1,14 +1,22 @@
 const { defineConfig } = require('cypress')
+const createBundler = require('@bahmutov/cypress-esbuild-preprocessor')
+const addCucumberPreprocessorPlugin = require('@badeball/cypress-cucumber-preprocessor').addCucumberPreprocessorPlugin
+const createEsbuildPlugin = require('@badeball/cypress-cucumber-preprocessor/esbuild').createEsbuildPlugin
 
 module.exports = defineConfig({
   e2e: {
-    baseUrl: 'http://localhost:8000/',
-    // We've imported your old cypress plugins here.
-    // You may want to clean this up later by importing these.
-    setupNodeEvents(on, config) {
-      return require('./cypress/plugins/index.js')(on, config)
+    baseUrl: process.env.CYPRESS_BASE_URL || 'http://localhost:8000/',
+    specPattern: 'cypress/e2e/**/*.feature',
+    supportFile: 'cypress/support/e2e.js',
+    async setupNodeEvents(on, config) {
+      await addCucumberPreprocessorPlugin(on, config)
+      on(
+        'file:preprocessor',
+        createBundler({
+          plugins: [createEsbuildPlugin(config)],
+        })
+      )
+      return config
     },
-    excludeSpecPattern: '*.js',
-    specPattern: 'cypress/e2e/**/*.{feature,features}',
   },
 })
