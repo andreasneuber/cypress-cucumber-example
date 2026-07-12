@@ -33,8 +33,10 @@
   "devDependencies": {
     "@badeball/cypress-cucumber-preprocessor": "26.0.0",
     "@bahmutov/cypress-esbuild-preprocessor": "^2.2.3",
+    "@types/node": "^26.1.1",
     "cypress": "^15.18.1",
-    "multiple-cucumber-html-reporter": "^4.1.0"
+    "multiple-cucumber-html-reporter": "^4.1.0",
+    "typescript": "^5.9.3"
   },
   "overrides": {
     "serialize-javascript": "^7.0.5",

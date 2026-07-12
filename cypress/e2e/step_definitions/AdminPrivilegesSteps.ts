@@ -1,8 +1,8 @@
 import {Given, When, Then, Before} from "@badeball/cypress-cucumber-preprocessor";
-import loginPage from "../../support/pageObjects/loginPage.js";
-import userAccountPage from "../../support/pageObjects/userAccountPage.js";
-import employeePage from "../../support/pageObjects/employeePage.js";
-import salesPage from "../../support/pageObjects/salesPage.js";
+import loginPage from "../../support/pageObjects/loginPage";
+import userAccountPage from "../../support/pageObjects/userAccountPage";
+import employeePage from "../../support/pageObjects/employeePage";
+import salesPage from "../../support/pageObjects/salesPage";
 
 Given(/^I navigate to login page$/, function () {
     loginPage.visit();

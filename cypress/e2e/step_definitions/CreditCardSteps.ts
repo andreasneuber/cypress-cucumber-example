@@ -1,6 +1,6 @@
 import {Given, When, Then, Before} from "@badeball/cypress-cucumber-preprocessor";
-import creditCardEntryPage from "../../support/pageObjects/creditCardEntryPage.js";
-import creditCardResponsePage from "../../support/pageObjects/creditCardResponsePage.js";
+import creditCardEntryPage from "../../support/pageObjects/creditCardEntryPage";
+import creditCardResponsePage from "../../support/pageObjects/creditCardResponsePage";
 
 Given(/^User is on card card entry page$/, function () {
     creditCardEntryPage.visit();

@@ -1,6 +1,6 @@
 import {Given, When, Then, Before} from "@badeball/cypress-cucumber-preprocessor";
-import loginPage from "../../support/pageObjects/loginPage.js";
-import userAccountPage from "../../support/pageObjects/userAccountPage.js";
+import loginPage from "../../support/pageObjects/loginPage";
+import userAccountPage from "../../support/pageObjects/userAccountPage";
 
 Given(/^I enter following for login$/, function (datatable) {
     const row = new Map();

@@ -1,6 +1,6 @@
 import {Given, When, Then, Before} from "@badeball/cypress-cucumber-preprocessor";
-import provideYourDetailsPage from "../../support/pageObjects/provideYourDetailsPage.js";
-import thankYouPage from "../../support/pageObjects/thankYouPage.js";
+import provideYourDetailsPage from "../../support/pageObjects/provideYourDetailsPage";
+import thankYouPage from "../../support/pageObjects/thankYouPage";
 
 Given(/^I navigate to Information about yourself page$/, function () {
     provideYourDetailsPage.visit();

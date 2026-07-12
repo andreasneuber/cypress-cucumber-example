@@ -1,5 +1,5 @@
 import {Given, When, Then, Before} from "@badeball/cypress-cucumber-preprocessor";
-import celsiusToFahrenheitPage from "../../support/pageObjects/celsiusToFahrenheitPage.js";
+import celsiusToFahrenheitPage from "../../support/pageObjects/celsiusToFahrenheitPage";
 
 Given(/^I provide "([^"]*)" degree Celsius$/, celsius => {
     celsiusToFahrenheitPage.visit();
