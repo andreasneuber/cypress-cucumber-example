@@ -31,10 +31,10 @@
   },
   "homepage": "https://github.com/andreasneuber/cypress-cucumber-example#readme",
   "devDependencies": {
-    "@badeball/cypress-cucumber-preprocessor": "24.0.1",
+    "@badeball/cypress-cucumber-preprocessor": "26.0.0",
     "@bahmutov/cypress-esbuild-preprocessor": "^2.2.3",
-    "cypress": "^15.17.0",
-    "multiple-cucumber-html-reporter": "^3.10.0"
+    "cypress": "^15.18.1",
+    "multiple-cucumber-html-reporter": "^4.1.0"
   },
   "overrides": {
     "serialize-javascript": "^7.0.5",
