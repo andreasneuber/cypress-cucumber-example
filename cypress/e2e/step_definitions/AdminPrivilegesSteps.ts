@@ -27,11 +27,12 @@ Then(/^information appears that employee "([^"]*)" belongs to department "([^"]*
         employeePage.grabEmployeeName().should('equal', expectedEmployeeName);
         employeePage.grabDepartmentName().should('equal', expectedDepartmentName);
     });
-When(/^Admin looks up total sales amount for month "([^"]*)" in year "([^"]*)"$/, function (month, year) {
+When(/^Admin looks up the total sales amount for month "([^"]*)" of last year$/, function (month) {
     userAccountPage.navigateToSalesSection();
 
     salesPage.salesStatisticsPageIsDisplayed().should('be.visible');
-    salesPage.grabYearMonthHeader().should('have.text', year + ' Month');
+    const lastYear = new Date().getFullYear() - 1;
+    salesPage.grabYearMonthHeader().should('have.text', lastYear + ' Month');
     salesPage.monthCellIsDisplayed(month).should('be.visible');
 });
 Then(/^the total "([^"]*)" sales amount is "([^"]*)"$/, function (month, expectedSalesAmount) {

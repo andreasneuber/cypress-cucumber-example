@@ -1,6 +1,6 @@
 class SalesPage {
     constructor() {
-        this.url = "?action=sales";
+        this.url = "sales";
         this.selectors = {
             pageHeading: 'h2',
             yearMonthHeader: '.sales.header-year-month',

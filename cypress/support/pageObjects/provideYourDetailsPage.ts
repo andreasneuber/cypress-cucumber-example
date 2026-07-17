@@ -1,6 +1,6 @@
 class ProvideYourDetailsPage {
     constructor() {
-        this.url = "?action=form1";
+        this.url = "form1";
         this.selectors = {
             firstNameInput: '#fname',
             lastNameInput: '#lname',

@@ -1,6 +1,6 @@
 class CreditCardResponsePage {
     constructor() {
-        this.url = "?action=responsecc";
+        this.url = "responsecc";
         this.selectors = {
             alertBox: '.alert',
             response: '.response',

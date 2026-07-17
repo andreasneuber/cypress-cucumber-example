@@ -1,6 +1,6 @@
 class ThankYouPage {
     constructor() {
-        this.url = "?action=thankYou";
+        this.url = "thankYou";
         this.selectors = {
             messageHeading: 'h2'
         };

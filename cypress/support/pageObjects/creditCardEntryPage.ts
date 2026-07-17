@@ -1,6 +1,6 @@
 class CreditCardEntryPage {
     constructor() {
-        this.url = "?action=form3";
+        this.url = "form3";
         this.selectors = {
             cardNameInput: '#cname',
             cardNumberInput: '#ccnum',

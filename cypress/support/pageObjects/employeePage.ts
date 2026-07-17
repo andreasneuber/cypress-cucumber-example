@@ -1,6 +1,6 @@
 class EmployeePage {
     constructor() {
-        this.url = "?action=employee";
+        this.url = "employee";
         this.selectors = {
             pageHeading: 'h2',
             employeeNameInput: '#employee-name',

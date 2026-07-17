@@ -1,6 +1,6 @@
 class LoginPage {
     constructor() {
-        this.url = "?action=form4";
+        this.url = "form4";
         this.selectors = {
             usernameInput: 'input[name="user"]',
             passwordInput: 'input[name="pw"]',

@@ -1,6 +1,6 @@
 class CelsiusToFahrenheitPage {
     constructor() {
-        this.url = "?action=form6";
+        this.url = "form6";
         this.selectors = {
             celsiusInput: 'input[name="celsius"]',
             fahrenheitInput: 'input[name="fahrenheit"]',

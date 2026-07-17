@@ -1,6 +1,6 @@
 class UserAccountPage {
     constructor() {
-        this.url = "?action=useraccount";
+        this.url = "useraccount";
         this.selectors = {
             userAccountHeading: 'h2',
             adminDashboardHeading: 'h2',
